@@ -1,4 +1,4 @@
-export print_tree, IshikawaLayout
+export print_tree, IshikawaLayout, to_dot
 
 """
     IshikawaLayout
@@ -53,4 +53,49 @@ function print_tree(g::CauseEffectGraph, root_id::NodeID; indent::Int=0)
     for cause_id in direct_causes(g, root_id)
         print_tree(g, cause_id; indent=indent+4)
     end
+end
+
+"""
+    to_dot(g)
+
+Generates a GraphViz DOT string representation of the graph.
+"""
+function to_dot(g::Union{CauseEffectGraph, AbstractModel})
+    io = IOBuffer()
+    println(io, "digraph CausalGraph {")
+    println(io, "    rankdir=LR;")
+    println(io, "    node [shape=box, style=rounded, fontname=\"Helvetica\"];")
+    println(io, "    edge [fontname=\"Helvetica\", fontsize=10];")
+    
+    # Write nodes
+    for id in nodes_of(g)
+        # Handle nodes from graph or model
+        node = g isa CauseEffectGraph ? g.nodes[id] : g.graph.nodes[id]
+        
+        shape = if node isa EffectNode
+            "ellipse"
+        elseif node isa CategoryNode
+            "parallelogram"
+        else
+            "box"
+        end
+        
+        style = node isa EffectNode ? "filled,rounded" : "rounded"
+        fillcolor = node isa EffectNode ? "#e0e0e0" : "white"
+        
+        # Format id to be a valid dot identifier (replace hyphens if UUID)
+        safe_id = replace(string(id), "-" => "_")
+        println(io, "    \"$(safe_id)\" [label=\"$(node.label)\", shape=\"$(shape)\", style=\"$(style)\", fillcolor=\"$(fillcolor)\"];")
+    end
+    
+    # Write edges
+    for edge in edges_of(g)
+        safe_src = replace(string(edge.src), "-" => "_")
+        safe_dst = replace(string(edge.dst), "-" => "_")
+        label = string(edge.rel)
+        println(io, "    \"$(safe_src)\" -> \"$(safe_dst)\" [label=\"$(label)\"];")
+    end
+    
+    println(io, "}")
+    return String(take!(io))
 end
