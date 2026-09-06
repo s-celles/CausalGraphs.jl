@@ -1,0 +1,4 @@
+[deps]
+CausalGraphs = "5b34ff98-3cd7-4491-9f4d-e18b2747e292"
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+DocumenterLandingPage = "1c52b33b-3e2f-4e99-b3b5-a6ad63f0d6d2"
