@@ -24,6 +24,7 @@
 !docs/make.jl
 !docs/src/**
 !.github/**
+!ext/**
 
 # Re-ignore generated or build files
 docs/build/
