@@ -13,6 +13,8 @@
 !spec.md
 !LICENSE.md
 !CHANGELOG.md
+!SECURITY.md
+!justfile
 
 # Allow source, tests, and docs files
 !src/**

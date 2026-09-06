@@ -1,0 +1,6 @@
+# CausalGraphs.jl
+
+A Julia-native framework for representing, analyzing, composing, comparing, and visualizing cause-effect knowledge and models.
+
+## Documentation
+This package distinguishes between a domain-level cause-effect knowledge graph and specific measurement/causal models derived from it.
