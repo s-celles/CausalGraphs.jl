@@ -1,0 +1,31 @@
+name = "CausalGraphs"
+uuid = "5b34ff98-3cd7-4491-9f4d-e18b2747e292"
+version = "0.1.0"
+authors = ["S. Celles"]
+
+[deps]
+DirectedAcyclicGraphs = "1e6dae5e-d6e2-422d-9af3-452e7a3785ee"
+Graphs = "86223c79-3864-5bf0-83f7-82e725a168b6"
+JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
+UUIDs = "cf7118a7-6976-5b1a-9a39-7adc72f591a4"
+
+[weakdeps]
+MakieCore = "20f20a25-4f0e-4fdf-b5d1-57303727442b"
+
+[extensions]
+CausalGraphsMakieExt = "MakieCore"
+
+[compat]
+DirectedAcyclicGraphs = "0.2.0"
+Graphs = "1.15.0"
+JSON = "1.7.1"
+MakieCore = "0.10.0"
+Test = "1"
+UUIDs = "1"
+julia = "1.10"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]

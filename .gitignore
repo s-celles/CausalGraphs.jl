@@ -1,0 +1,30 @@
+# Allowlist pattern (gitallow)
+*
+!*/
+
+# Explicitly allow specific files at root
+!.gitignore
+!Project.toml
+!README.md
+!ROADMAP.md
+!LICENSE.md
+!CHANGELOG.md
+!SECURITY.md
+!justfile
+
+# Allow source, tests, and docs files
+!src/**
+!test/**
+!docs/Project.toml
+!docs/make.jl
+!docs/src/**
+!.github/**
+!ext/**
+
+# Re-ignore generated or build files
+docs/build/
+*.cov
+*.info
+*.mem
+*.swp
+*~
