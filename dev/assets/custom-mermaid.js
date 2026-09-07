@@ -1,33 +1,27 @@
-function initMermaid() {
-    // Hide define.amd from require.js so that bundled UMD modules (like dayjs in mermaid) 
-    // don't try to register as AMD modules and break the ESM import.
-    var old_define = window.define;
-    if (window.define && window.define.amd) {
-        window.define = undefined;
-    }
-
-    var script = document.createElement('script');
-    script.type = 'module';
-    script.innerHTML = `
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: false, theme: 'neutral' });
-        try {
-            await mermaid.run({ querySelector: '.mermaid' });
-        } catch (e) {
-            console.error('Mermaid render error:', e);
-        }
+async function initMermaid() {
+    try {
+        // Fetch the single-file UMD version of Mermaid
+        const res = await fetch('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js');
+        let text = await res.text();
         
-        if (window._old_define) {
-            window.define = window._old_define;
+        // Strip out all AMD (require.js) checks. 
+        // This prevents bundled libraries (like dayjs and fastdom) from 
+        // registering as anonymous AMD modules and crashing Mermaid.
+        text = text.replace(/typeof define/g, '"undefined"');
+        
+        // Inject the patched script into the page
+        const script = document.createElement('script');
+        script.innerHTML = text;
+        document.body.appendChild(script);
+        
+        // Initialize and run Mermaid
+        if (window.mermaid) {
+            window.mermaid.initialize({ startOnLoad: false, theme: 'neutral' });
+            await window.mermaid.run({ querySelector: '.mermaid' });
         }
-    `;
-    
-    // Let's pass old_define to window so the module can restore it
-    if (old_define) {
-        window._old_define = old_define;
+    } catch (e) {
+        console.error('Mermaid render error:', e);
     }
-
-    document.body.appendChild(script);
 }
 
 if (document.readyState === 'loading') {
