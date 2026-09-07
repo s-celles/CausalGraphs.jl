@@ -19,7 +19,8 @@
   </defs>
 
   <!-- Central Spine -->
-  <path d="M 20 100 L 155 100" stroke="#666" stroke-width="5" fill="none" marker-end="url(#arrow)"/>
+  <!-- We end the spine a bit before the head so it attaches nicely -->
+  <path d="M 20 100 L 150 100" stroke="#666" stroke-width="5" fill="none" marker-end="url(#arrow)"/>
 
   <!-- Main Bones (Categories) -->
   <!-- Top Bones -->
@@ -49,8 +50,13 @@
   <circle cx="75" cy="150" r="8" fill="url(#nodeGrad)" opacity="0.7"/>
 
   <!-- Effect (Root) Node (The Fish Head) -->
-  <!-- A slightly elongated shape to feel like a fish head, or just a large circle -->
-  <ellipse cx="170" cy="100" rx="20" ry="25" fill="url(#rootGrad)" />
-  <!-- Central detail in the head -->
-  <circle cx="170" cy="100" r="10" fill="white" opacity="0.2" />
+  <!-- A shape that clearly looks like a fish head -->
+  <path d="M 150 100 C 150 70, 185 85, 195 100 C 185 115, 150 130, 150 100 Z" fill="url(#rootGrad)" />
+  
+  <!-- Fish Eye -->
+  <circle cx="172" cy="95" r="4" fill="white" />
+  <circle cx="174" cy="95" r="1.5" fill="#333" />
+  
+  <!-- Fish Mouth (small curve) -->
+  <path d="M 195 100 Q 188 103 185 103" stroke="white" stroke-width="1.5" fill="none" opacity="0.6"/>
 </svg>
