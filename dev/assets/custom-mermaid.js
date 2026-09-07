@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+function initMermaid() {
     // Hide define.amd from require.js so that bundled UMD modules (like dayjs in mermaid) 
     // don't try to register as AMD modules and break the ESM import.
     var old_define = window.define;
@@ -16,14 +16,7 @@ document.addEventListener("DOMContentLoaded", function() {
         } catch (e) {
             console.error('Mermaid render error:', e);
         }
-    `;
-    
-    // We must restore define after the script is loaded.
-    // However, since it's a module script, it executes asynchronously.
-    // So we shouldn't just restore it immediately.
-    // But actually, require.js might break if define is gone for too long.
-    // An alternative: the code inside the module script executes, so we can restore it inside.
-    script.innerHTML += `
+        
         if (window._old_define) {
             window.define = window._old_define;
         }
@@ -35,4 +28,10 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     document.body.appendChild(script);
-});
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener("DOMContentLoaded", initMermaid);
+} else {
+    initMermaid();
+}
