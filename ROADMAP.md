@@ -79,3 +79,35 @@ To execute this roadmap autonomously using an agent, use the following ordered p
 
 ### Prompt 6: Serialization
 > "Read `spec.md` (Section 19). Implement serialization and deserialization for `CauseEffectGraph` and `Model` in `src/serialization.jl` using JSON or TOML. Write tests that serialize a populated graph, deserialize it, and verify that the structures and stable IDs match exactly (round-trip testing)."
+
+## Phase 6: Future Explorations & Ontologies (Post-MVP)
+
+**Goal:** Evolve the package from a qualitative knowledge graph to a strictly validated, quantitative engine with a major focus on Metrology and Symbolic Uncertainty quantification.
+
+### 1. Seamless Bridge with `SymbolicUncertainties.jl` (Top Priority)
+- **Objective:** Automate GUM (Guide to the Expression of Uncertainty in Measurement) evaluations directly from the Ishikawa/Cause-Effect graph.
+- **Implementation Ideas:**
+  - Define a function `to_symbolic_model(m::MeasurementModel)` that traverses the DAG and automatically instantiates the symbolic variables.
+  - Automatically map `CauseNode` to symbolic inputs ($X_i$) and `EffectNode` to the symbolic measurand ($Y$).
+  - Allow edges to carry mathematical operators or functional forms (e.g., additive, multiplicative).
+  - Feed the resulting symbolic equation directly into **`SymbolicUncertainties.jl`** to instantly generate sensitivity coefficients and the complete uncertainty budget table without manual math.
+
+### 2. Metrology Ontology (VIM) & Semantic Validation
+- **Objective:** Ensure the graph is structurally and physically sound before passing it to the symbolic layer.
+- **Implementation Ideas:**
+  - Use Julia's **Multiple Dispatch** to enforce ontology rules (e.g., `is_valid_edge(src::CategoryNode, dst::CauseNode, ::Causes) = false`).
+  - Introduce explicit types reflecting the *International Vocabulary of Metrology* (VIM) : `MeasurandNode`, `InfluenceQuantityNode`, `CorrectionNode`.
+  - Validate physical dimensions by coupling node metadata with `Unitful.jl` to prevent adding incompatible units before the symbolic evaluation.
+
+### 3. Pearl's Causal Inference & Probabilistic Models
+- **Objective:** Extend beyond metrology to modern causal data science.
+- **Implementation Ideas:**
+  - Implement *do-calculus* and adjustment criteria (Back-door, Front-door criteria) leveraging the new `Graphs.jl` backend.
+  - Bridge to `Turing.jl` or `Omega.jl` to automatically compile a qualitative DAG into a fully runnable Probabilistic/Bayesian Generative Model.
+
+### 4. Advanced Graph Visualizations & Interaction
+- **Objective:** Improve the user feedback loop when building complex models.
+- **Implementation Ideas:**
+  - Color-coding logic in Mermaid.js based on node types (e.g., VIM categories).
+  - Interactive layouts via `GraphMakie` (already stubbed in `CausalGraphsMakieExt.jl`).
+  - RDF / JSON-LD export for querying the causal knowledge graph via SPARQL.
