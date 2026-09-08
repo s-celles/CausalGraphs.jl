@@ -99,10 +99,10 @@ To execute this roadmap autonomously using an agent, use the following ordered p
   - Introduce explicit types reflecting the *International Vocabulary of Metrology* (VIM) : `MeasurandNode`, `InfluenceQuantityNode`, `CorrectionNode`.
   - Validate physical dimensions by coupling node metadata with `Unitful.jl` to prevent adding incompatible units before the symbolic evaluation.
 
-### 3. Pearl's Causal Inference & Probabilistic Models
-- **Objective:** Extend beyond metrology to modern causal data science.
+### 3. Pearl's Causal Inference & Probabilistic Models (Integration)
+- **Objective:** Extend beyond metrology to modern causal data science without reinventing the wheel.
 - **Implementation Ideas:**
-  - Implement *do-calculus* and adjustment criteria (Back-door, Front-door criteria) leveraging the new `Graphs.jl` backend.
+  - Provide an export function `to_dagitty(g::CauseEffectGraph)` to seamlessly interface with **`Dagitty.jl`** for structural causal analysis (d-separation, Back-door criteria, Instrumental Variables).
   - Bridge to `Turing.jl` or `Omega.jl` to automatically compile a qualitative DAG into a fully runnable Probabilistic/Bayesian Generative Model.
 
 ### 4. Advanced Graph Visualizations & Interaction
