@@ -164,7 +164,7 @@ function to_ishikawa(g::Union{CauseEffectGraph, AbstractModel})
             println(io, "      ", nodes_dict[cause].label)
             sub_causes = [nodes_dict[e.src] for e in edges_of(g) if e.dst == cause && nodes_dict[e.src] isa CauseNode]
             for sub_cause in sub_causes
-                println(io, "        ", sub_nodes_dict[cause].label)
+                println(io, "        ", sub_cause.label)
             end
         end
     end
