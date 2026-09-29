@@ -13,3 +13,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Metrology MeasurementModel extension
 - JSON serialization
 - Documentation setup with Documenter.jl and DocumenterLandingPage.jl
+
+### Fixed
+- `to_ishikawa` threw an `UndefVarError` when a cause had sub-causes

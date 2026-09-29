@@ -128,3 +128,17 @@ end
     rm(path)
 end
 
+@testset "CausalGraphs.jl - Views" begin
+    g = CauseEffectGraph()
+    effect = add_effect!(g, "Defect")
+    machine = add_category!(g, "Machine")
+    add_edge!(g, machine, effect, ContributesTo())
+    wear = add_cause!(g, machine, "Tool wear")
+    add_cause!(g, wear, "Coolant flow low"; rel=Causes())
+
+    out = to_ishikawa(g)
+    @test startswith(out, "ishikawa\n  Defect\n")
+    @test occursin("\n    Machine\n", out)
+    @test occursin("\n      Tool wear\n", out)
+    @test occursin("\n        Coolant flow low\n", out)
+end
